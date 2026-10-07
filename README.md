@@ -2,13 +2,18 @@
 
 **Federico Ramírez** · Data Mining en Economía y Finanzas, Maestría en Data Mining (UBA), 2026 · comisión del lunes.
 
-Este repositorio reproduce, desde el dataset crudo de la cátedra, el archivo que entregué al bot de la
-competencia: **`d04k2en11500.csv`**, con 11.500 clientes de 202108 y SHA-256
-`91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba`.
+Este repositorio reproduce, desde el dataset crudo de la cátedra, el archivo que envié al bot de la competencia:
+**`d06dn11500.csv`**, con 11.500 clientes de 202108 y SHA-256
+`de534992228e5f26ebda4dc867f86dc78282cc194030e1884ecdd2ffd1a3d294`.
 
-**El modelo:** el promedio de las probabilidades de 20 LightGBM, uno por semilla, entrenados con 202103–202106
-para separar BAJA+1 y BAJA+2 de CONTINUA. Usan los datos reparados más 20 variables de historia. Se envían los
-11.500 clientes con mayor promedio.
+**El modelo, D:** el promedio de las probabilidades de 20 LightGBM, uno por semilla.
+- **Entrenamiento:** 202103–202106, para separar BAJA+1 y BAJA+2 de CONTINUA.
+- **Variables:** los datos reparados más *lag* 1, delta 1, *lag* 2 y delta 2 de todas las variables, 735 columnas
+  útiles.
+- **Receta de hiperparámetros:** la de Denicolay, ajustada en mi búsqueda de D04 (prueba 38).
+- **Envío:** los 11.500 clientes con mayor promedio.
+
+También reproduce la entrega anterior, **`d04k2en11500.csv`** (la «base»), con `python reproducir.py base`.
 
 ## Cómo reproducirlo
 
@@ -26,8 +31,8 @@ python reproducir.py
 ```
 
 **Comprobado en Windows 11,** en una carpeta limpia y con las versiones de `requirements.txt`: termina con
-`OK: d04k2en11500.csv coincide byte por byte con el archivo entregado`. Tardó 3,3 minutos, casi todos en entrenar
-los 20 modelos, de unos 9 segundos cada uno.
+`OK: d06dn11500.csv coincide byte por byte con el archivo enviado`. Tardó 37 minutos, casi todos en
+entrenar los 20 modelos, de unos 108 segundos cada uno. La base (`python reproducir.py base`) tarda unos 4 minutos.
 
 En otro sistema operativo o con otra compilación de LightGBM, `deterministic=True` no garantiza las mismas
 probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en clientes cercanos al corte.
@@ -37,40 +42,46 @@ probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en 
 | Script | Qué hace |
 |---|---|
 | `01_preparar_datos.py` | Lee el crudo, calcula `clase_ternaria` con la lógica de la cátedra y aplica las reparaciones de D01. Escribe `datos/competencia_01_d01.parquet`. |
-| `02_variables.py` | Módulo de variables. La base que se usa, `BASE`, es C7: los datos de D01 más *lag* 1 y delta 1 de seis conteos y del ranking mensual de cuatro montos. |
-| `03_envios_tablero.py` | Módulo con los meses, las 20 semillas, los hiperparámetros y la escritura del CSV. Como script arma los envíos de prueba de D02; `reproducir.py` no lo corre así. |
-| `05_envios_ensamble.py` | `entrenar d03k2`: los 20 modelos de clase K2 y sus probabilidades para 202108. `archivo d03k2 d04k2e 11500`: el CSV con los 11.500 clientes de mayor promedio. |
+| `02_variables.py` | Módulo de variables. Para D se usa `construir(df, hist_1y2_todas=True)`: *lags* y deltas 1 y 2 de todos los predictores. La base usa `BASE`, la historia selectiva de C7. |
+| `03_envios_tablero.py` | Módulo con los meses, las 20 semillas y la escritura del CSV. Como script arma los envíos de prueba de D02; `reproducir.py` no lo corre así. |
+| `06_receta_denicolay.py` | **D:** los 20 modelos con la receta de la prueba 38, sus probabilidades para 202108 y el CSV con los 11.500 clientes de mayor promedio. |
+| `05_envios_ensamble.py` | **La base:** `entrenar d03k2` y `archivo d03k2 d04k2e 11500`. |
 | `test_01_preparar_datos.py`, `test_02_variables.py` | Pruebas con paneles chicos: clase, reparaciones, identificadores, rutas con apóstrofo e historia por mes exacto. |
 | `reproducir.py` | Corre las pruebas y los pasos en orden, y compara cada etapa con `huellas_esperadas.json`. |
 
-## Qué fija el resultado
+## Qué fija el resultado de D
 
 - **Semillas:** 147347, 322607, 462467, 782149 y 983809, y los tres primos siguientes a cada una
   (`semillas()` en `03_envios_tablero.py`).
-- **LightGBM:** `objective` binary, `learning_rate` 0,05, `num_leaves` 63, `min_data_in_leaf` 200,
-  `feature_fraction` 0,5, `bagging_fraction` 0,8 con `bagging_freq` 1 y 500 rondas. `deterministic=True`,
-  `force_col_wise=True` y `num_threads=12` están fijos en el código. No hace falta tener 12 núcleos, pero con
-  menos tarda más.
+- **LightGBM** (`06_receta_denicolay.py`):
+  - `objective` binary, `learning_rate` 0,005, `max_bin` 31, `min_data_in_leaf` 0, `feature_fraction` 0,5,
+    `feature_fraction_bynode` 0,2 y sin *bagging*;
+  - 83 hojas, 1.000 rondas y `min_sum_hessian_in_leaf` = 12,791817 × filas / 326.184;
+  - `deterministic=True`, `force_col_wise=True` y `num_threads=12`, fijos en el código. No hace falta tener 12
+    núcleos, pero con menos tarda más;
+  - el `Dataset` se construye una vez y se reutiliza entre semillas.
+- **Clase:** BAJA+1 y BAJA+2 contra CONTINUA. La ganancia cuenta sólo BAJA+2.
 - **Empates:** los clientes de 202108 están ordenados por `numero_de_cliente` y el orden se toma con `argsort`
   estable.
 - **CSV:** un `numero_de_cliente` por línea, sin encabezado, en ASCII y con saltos de línea CRLF.
 - **Entorno de la corrida original:** Windows 11 Pro, AMD Ryzen 7 9800X3D (8 núcleos, 16 hilos), Python 3.13.3 y
   las versiones de `requirements.txt`.
 
-`reproducir.py` se detiene si el crudo no es el de la cátedra o si el CSV final no coincide. Si difieren el
-parquet o las probabilidades, por ejemplo con otro procesador, avisa y sigue: lo que se entregó es la lista de
-clientes.
+`reproducir.py` se detiene si el crudo no es el de la cátedra o si el CSV final no coincide. Si difieren el parquet
+o las probabilidades, por ejemplo con otro procesador, avisa y sigue: lo que se envió es la lista de clientes.
 
 ## Huellas
 
 | Archivo | SHA-256 |
 |---|---|
 | `competencia_01_crudo.csv`, la entrada (492.769.580 bytes) | `c72c8f5c1149f1d972e996c2963c5e3dbb31eb38cfe41c2bb1bbaf847d7a7ca1` |
-| `d04k2en11500.csv`, la entrega | `91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba` |
+| `d06dn11500.csv`, D | `de534992228e5f26ebda4dc867f86dc78282cc194030e1884ecdd2ffd1a3d294` |
+| `d04k2en11500.csv`, la base | `91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba` |
 
-Las intermedias, del parquet, las claves, las columnas y las 20 probabilidades, están en `huellas_esperadas.json`.
+Las intermedias, del parquet, las claves, las columnas y las 20 probabilidades de cada entrega, están en
+`huellas_esperadas.json`.
 
-## Diferencias con los scripts que generaron el envío
+## Diferencias con los scripts que generaron los envíos
 
 Son copias de los que usé, con estos cambios, que no alteran el resultado:
 
@@ -82,6 +93,11 @@ Son copias de los que usé, con estos cambios, que no alteran el resultado:
    CRLF, así que el archivo es el mismo; en Linux o macOS, sin este cambio, cambiaría la huella.
 4. El docstring de `01_preparar_datos.py` y su prueba usan identificadores sintéticos en lugar de un cliente real
    del crudo.
+5. `06_receta_denicolay.py` es el camino de entrenamiento de D de mi armador de candidatos, en un solo archivo y sin
+   depender de mis carpetas de trabajo. Antes de armar D, ese armador reprodujo bit a bit los dos caminos de
+   entrenamiento que usa: el de la configuración vigente y el de la prueba 38.
+6. `02_variables.py` no incluye dos opciones que agregué después en mi copia, `cero_fijo` y `mantenimiento_signo`.
+   Las probé en D06, no las adopté y ni D ni la base las usan.
 
 Los docstrings mencionan archivos de mi carpeta de trabajo que no se publican: `decisiones/`, `experimentos/`,
 `envios/` y el script que manda los archivos al bot. El resumen de las decisiones está en
@@ -90,5 +106,5 @@ Los docstrings mencionan archivos de mi carpeta de trabajo que no se publican: `
 ## Qué no incluye
 
 - el crudo ni nada derivado de él: parquet, modelos o probabilidades;
-- el CSV entregado ni otras listas de clientes;
+- los CSV enviados ni otras listas de clientes;
 - el script de envío al bot ni credenciales.

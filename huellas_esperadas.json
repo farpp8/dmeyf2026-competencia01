@@ -1,36 +1,94 @@
 {
- "origen": "Corrida que generó el envío d04k2en11500.csv (6 y 7-oct-2026), en la computadora del autor",
+ "origen": "Corridas que generaron los envíos: la base d04k2en11500.csv (6 y 7-oct-2026) y D d06dn11500.csv (7-oct-2026), en la computadora del autor",
  "crudo": {
   "competencia_01_crudo.csv": "c72c8f5c1149f1d972e996c2963c5e3dbb31eb38cfe41c2bb1bbaf847d7a7ca1"
  },
  "datos": {
   "competencia_01_d01.parquet": "4da88d70d24602bc79f4e0ab94faa884ba8433f2675e0cca0f2b43fb9169ea72"
  },
- "modelos": {
-  "claves_202108.npy": "818aa986d146169696bd5d0c6ec2972970532ffb791016b41f8bb86b9ec933f8",
-  "columnas.json": "5ef60961b3fba8c31eb86e251d88810cfca9cd4ab2f8130d7e24f6b95834c11a",
-  "probabilidades_147347.npy": "560c0aed7983f75ca516b778026c82bb47305e48a2c9eea579a03651d73021a3",
-  "probabilidades_147353.npy": "65b35fbbb82e331851b1793f042436176819215d4af1dfa9322de5799d2de976",
-  "probabilidades_147377.npy": "3cdcca333ff0d38edd34a4c3458b0024a5ce5ef0913f3ed3ee451e65fefccd07",
-  "probabilidades_147391.npy": "af5d5170c3c108984ea1af27fb7b8e080fbd561a5d97edcdfb6fa70c1646c93d",
-  "probabilidades_322607.npy": "f753273fba2cf6e47d11d9961830338edeb148e0868626f44a8107404f378ebd",
-  "probabilidades_322613.npy": "65093b0f3d063c78457842f17a1b67cc4d72aa103a72adc34dade354f3c480a3",
-  "probabilidades_322627.npy": "60c7ab6563c637f1dec0ef0f0ef2639b2a2fad3c8b5199b6e9c4cf77c349b8d5",
-  "probabilidades_322631.npy": "5d5b37ce95123d824c7e6f971a415992105e61b7227563975b0ade76e992f07b",
-  "probabilidades_462467.npy": "dde85db2cbe22f6e7b3560e5c27b2d67bd142cc2a72805712f0f81fe3a0c6eae",
-  "probabilidades_462481.npy": "49a4ac56a3cf8cdbf4df432d7eac8d8cfbf4bd55023c72c813075f3a593eb146",
-  "probabilidades_462491.npy": "bbbfa7e0d87b6f7b3b44098dcc6124b4663d8740b56d3c3261af437e1bf4b4b2",
-  "probabilidades_462493.npy": "5c5700d1ae70d47393f183b54b1dfd143917ec7127c5a736b8e6d2e054049525",
-  "probabilidades_782149.npy": "5811218f5673ee7e82f50e51d5556d61cf0c901e9fae6f3b8999247ef19d7864",
-  "probabilidades_782183.npy": "0055afc2070cebbaa6783338466b186d23187f1aad5f2fead1040a675c33f42d",
-  "probabilidades_782189.npy": "66ff793f4fbea4725a66476df07f65cefc41676591cb06f8f77a2619f09fa18f",
-  "probabilidades_782191.npy": "1eca5c2aa574e145391c27d9f7c3048c15368021146d98b9952ade9f14944fde",
-  "probabilidades_983809.npy": "736dd3d249f04590a3b777d4d2de48b76af551ac88e4f7998f5ca2f5e2f3b12a",
-  "probabilidades_983813.npy": "a15252b519eb025010f08d97b1bc6586e3a7d03eba6bac6fcdc7fb4fb07403b3",
-  "probabilidades_983819.npy": "650b149e9d865a0ddd4f94302969358b6914c84dd7c2d1dcd3b3f401254513a8",
-  "probabilidades_983849.npy": "d67168df0c993e35010dcc748e6bee4dfe6394c67b0da8c268a5e8a2d934abed"
- },
- "entrega": {
-  "d04k2en11500.csv": "91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba"
+ "entregas": {
+  "d06d": {
+   "descripcion": "D: C0 + lags y deltas 1 y 2 de todo, receta de la prueba 38, K2 (D06)",
+   "pasos": [
+    [
+     "06_receta_denicolay.py"
+    ]
+   ],
+   "modelos_en": "d06d",
+   "modelos": {
+    "claves_202108.npy": "818aa986d146169696bd5d0c6ec2972970532ffb791016b41f8bb86b9ec933f8",
+    "columnas.json": "7b2797f3bf257feee3855d49b1c049f3f324934108ae132cdcc15b0a7b7f6eba",
+    "probabilidades_147347.npy": "f321e86012e153132da191ff1837738f71224d434c574b595ab243caa0315953",
+    "probabilidades_147353.npy": "98fad8e3691fe3970e6134c75a447f9e43aa54a24edd7625c3da8a08283512de",
+    "probabilidades_147377.npy": "8a1d2756e79b0ab53edf9eec8fb38a47a1e8a88ff29b3766d5b2045bf70a07cc",
+    "probabilidades_147391.npy": "1639814b738b97bc6167436f35254221681210b37dcdbf3ae8d102df8a77b55b",
+    "probabilidades_322607.npy": "ae39134c296364e2266a8a641e9b26af717e2a362e8991b97d5f081656a6145b",
+    "probabilidades_322613.npy": "7b9d0d961e998ae1ca458798abfe6f58e6fb48cc66e9b14985b7e92795916d14",
+    "probabilidades_322627.npy": "89eb2a9185c9ba4c5ed6597dd18d94e3354b213898c3f0d461b8c56991cb77b9",
+    "probabilidades_322631.npy": "f6700bad99b6ec491f331457c0afbe2b4fa50e548e545519890c254bcd9ceaec",
+    "probabilidades_462467.npy": "98fb381bd37624ee4d6ba91664478771987b7038d3f0af6c1ea860d6fbb8df17",
+    "probabilidades_462481.npy": "805143d486a61a2028af2ca77617d454984872438a32daea5b5bd89cc0099b5a",
+    "probabilidades_462491.npy": "64ed848619394db8e7738bc1456170bc2891426b700571611e16a8736239074e",
+    "probabilidades_462493.npy": "4a46e649a3aa01332d3168466b1587a7ac033e78126a203035ec31a793d50185",
+    "probabilidades_782149.npy": "b0674446056d690ac8caaeaf3ccc89dfd73a8323403c6004dd34096147fb968e",
+    "probabilidades_782183.npy": "89e8242c485d4f28aa0a3ede1f6cac2e706b872522908a9b0329ecc701dabbf2",
+    "probabilidades_782189.npy": "6f73e5c31a57f2a5cf1e2b35c3ac3328c425e8151f8fe18b031e8b88ad1aac74",
+    "probabilidades_782191.npy": "4ae3432312687c2d635bfc0a95cb187c973311161cb73753472a822ed772b05f",
+    "probabilidades_983809.npy": "28969b273e25968e848a5d6bedb53a803f9d51da03237d313a15b3a7ac28d42e",
+    "probabilidades_983813.npy": "38f0cc22bd4f4ae0a32be64aa499de16a88e79ec2e175a13fa8b00b259eb9b4b",
+    "probabilidades_983819.npy": "b338922d38ba4ee15f2c4b08e1a8abe17d95f90ebe253bebe18ac378b2a256bc",
+    "probabilidades_983849.npy": "ae4a7137331c25ef649b89d6d284e5c81bebbec5154952208756d07f54b4d2f6"
+   },
+   "csv_en": "d06d",
+   "csv": {
+    "d06dn11500.csv": "de534992228e5f26ebda4dc867f86dc78282cc194030e1884ecdd2ffd1a3d294"
+   }
+  },
+  "base": {
+   "descripcion": "Base: K2 sobre C7 con la configuración de D04 (D05)",
+   "pasos": [
+    [
+     "05_envios_ensamble.py",
+     "entrenar",
+     "d03k2"
+    ],
+    [
+     "05_envios_ensamble.py",
+     "archivo",
+     "d03k2",
+     "d04k2e",
+     "11500"
+    ]
+   ],
+   "modelos_en": "d03k2",
+   "modelos": {
+    "claves_202108.npy": "818aa986d146169696bd5d0c6ec2972970532ffb791016b41f8bb86b9ec933f8",
+    "columnas.json": "5ef60961b3fba8c31eb86e251d88810cfca9cd4ab2f8130d7e24f6b95834c11a",
+    "probabilidades_147347.npy": "560c0aed7983f75ca516b778026c82bb47305e48a2c9eea579a03651d73021a3",
+    "probabilidades_147353.npy": "65b35fbbb82e331851b1793f042436176819215d4af1dfa9322de5799d2de976",
+    "probabilidades_147377.npy": "3cdcca333ff0d38edd34a4c3458b0024a5ce5ef0913f3ed3ee451e65fefccd07",
+    "probabilidades_147391.npy": "af5d5170c3c108984ea1af27fb7b8e080fbd561a5d97edcdfb6fa70c1646c93d",
+    "probabilidades_322607.npy": "f753273fba2cf6e47d11d9961830338edeb148e0868626f44a8107404f378ebd",
+    "probabilidades_322613.npy": "65093b0f3d063c78457842f17a1b67cc4d72aa103a72adc34dade354f3c480a3",
+    "probabilidades_322627.npy": "60c7ab6563c637f1dec0ef0f0ef2639b2a2fad3c8b5199b6e9c4cf77c349b8d5",
+    "probabilidades_322631.npy": "5d5b37ce95123d824c7e6f971a415992105e61b7227563975b0ade76e992f07b",
+    "probabilidades_462467.npy": "dde85db2cbe22f6e7b3560e5c27b2d67bd142cc2a72805712f0f81fe3a0c6eae",
+    "probabilidades_462481.npy": "49a4ac56a3cf8cdbf4df432d7eac8d8cfbf4bd55023c72c813075f3a593eb146",
+    "probabilidades_462491.npy": "bbbfa7e0d87b6f7b3b44098dcc6124b4663d8740b56d3c3261af437e1bf4b4b2",
+    "probabilidades_462493.npy": "5c5700d1ae70d47393f183b54b1dfd143917ec7127c5a736b8e6d2e054049525",
+    "probabilidades_782149.npy": "5811218f5673ee7e82f50e51d5556d61cf0c901e9fae6f3b8999247ef19d7864",
+    "probabilidades_782183.npy": "0055afc2070cebbaa6783338466b186d23187f1aad5f2fead1040a675c33f42d",
+    "probabilidades_782189.npy": "66ff793f4fbea4725a66476df07f65cefc41676591cb06f8f77a2619f09fa18f",
+    "probabilidades_782191.npy": "1eca5c2aa574e145391c27d9f7c3048c15368021146d98b9952ade9f14944fde",
+    "probabilidades_983809.npy": "736dd3d249f04590a3b777d4d2de48b76af551ac88e4f7998f5ca2f5e2f3b12a",
+    "probabilidades_983813.npy": "a15252b519eb025010f08d97b1bc6586e3a7d03eba6bac6fcdc7fb4fb07403b3",
+    "probabilidades_983819.npy": "650b149e9d865a0ddd4f94302969358b6914c84dd7c2d1dcd3b3f401254513a8",
+    "probabilidades_983849.npy": "d67168df0c993e35010dcc748e6bee4dfe6394c67b0da8c268a5e8a2d934abed"
+   },
+   "csv_en": "d04k2e",
+   "csv": {
+    "d04k2en11500.csv": "91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba"
+   }
+  }
  }
 }

@@ -1,6 +1,6 @@
 # Decisiones de la Competencia 1
 
-Resumen de las cinco decisiones que llevaron al archivo entregado, del 5 al 7-oct-2026. El detalle completo, con
+Resumen de las seis decisiones que llevaron al archivo entregado, del 5 al 7-oct-2026. El detalle completo, con
 los análisis, las pruebas y las verificaciones, está en mi carpeta de trabajo y no se publica.
 
 ## Procedimiento
@@ -98,7 +98,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
 
 ## D05 · Archivo final (7-oct)
 
-- **Decisión: K2 sola,** con 20 semillas y N = 11.500: `d04k2en11500.csv`, el último archivo que mandé al bot.
+- **Decisión: K2 sola,** con 20 semillas y N = 11.500: `d04k2en11500.csv`, el último envío hasta ese momento.
 - **Alternativas medidas y no adoptadas,** porque ninguna cumplió la regla de reemplazo:
 
   | Alternativa | Contra K2, en validación |
@@ -107,6 +107,30 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   | Promedio de rangos K1 + K2 | A −9,09 M; F3 −7,81 M |
   | K2 + la receta de D04 (prueba 38, la mejor finalista de la selección) | entre +5,8 y +6,3 M en la media de F1 y F2, por debajo de los 10 M; sin F3 |
   | K1 sola | A −28,54 M; mejor en el tablero: 92,81 y 91,82 contra 86,74 |
+
+## D06 · Plan para los últimos días (7-oct)
+
+- **Un punto ciego de la validación local:**
+  - F1 no usa ninguna variable de historia, porque marzo no tiene mes anterior;
+  - la historia de orden 2 no existe en ningún corte: 0 columnas útiles en F1, F2 y F3, y 294 en el modelo final
+    (147 *lags* 2 y 147 deltas 2).
+- **Grilla cerrada contra la base:** ninguna variante pasó la regla. Fueron un ranking con «cero fijo», el signo de
+  la comisión de mantenimiento y sacar la historia.
+- **Tablero, con candidatos y regla fijados antes de ver resultados:**
+  - un envío por candidato, todos con 20 semillas y N = 11.500;
+  - para adoptar un candidato sin evidencia local hay que superar a la base por un margen corregido por la cantidad
+    de candidatos mirados.
+
+  | Candidato | Público | Contra la base |
+  |---|---:|---:|
+  | Base (K2 sobre C7) | 86,74 | — |
+  | K2 + prueba 38, mezcla 50/50 | 89,95 | +3,2 |
+  | K1 | 91,82 | +5,1 |
+  | L: *lags* y deltas 1 y 2 de todo, configuración vigente | 98,59 | +11,9 |
+  | **D: las variables de L con la receta de la prueba 38** | **103,18** | **+16,4** |
+
+- **La regla elige D**, lo que verificó Codex por su cuenta. D es el último envío.
+- **D07:** un proceso iterativo multiagente alrededor de D, en curso.
 
 ## Uso de IA
 
