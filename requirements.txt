@@ -1,0 +1,12 @@
+# Entorno completo con el que se generó el archivo entregado: Python 3.13.3 en Windows 11.
+# Incluye las dependencias indirectas (scipy por LightGBM; dateutil, pytz, six y tzdata por pandas).
+duckdb==1.5.5
+lightgbm==4.6.0
+numpy==2.2.6
+pandas==2.2.3
+pyarrow==23.0.1
+python-dateutil==2.9.0.post0
+pytz==2025.2
+scipy==1.15.3
+six==1.17.0
+tzdata==2025.2
