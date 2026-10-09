@@ -3,7 +3,9 @@
 
 Uso: `python reproducir.py [entrega]`, con el crudo de la cátedra en `datos/competencia_01_crudo.csv` o en la ruta
 de la variable de entorno COMPETENCIA_01_CRUDO.
-- `python reproducir.py` (o `d06d`): **D**, `d06dn11500.csv`: C0 con *lags* y deltas 1 y 2 de todas las variables,
+- `python reproducir.py` (o `d10d`): **el último envío**, `d10dn11000.csv`: D con N = 11.000, la regla de N de D10.
+  Corre D y después `07_archivo_d10.py`. Tarda unos 40 minutos.
+- `python reproducir.py d06d`: **D**, `d06dn11500.csv`: C0 con *lags* y deltas 1 y 2 de todas las variables,
   la receta de la prueba 38 y K2 (D06). Tarda unos 40 minutos.
 - `python reproducir.py base`: la entrega anterior, `d04k2en11500.csv`: K2 sobre C7 (D05). Tarda unos 4 minutos.
 
@@ -14,6 +16,7 @@ Pasos:
 4. los pasos de la entrega, según `huellas_esperadas.json`:
    - D: `06_receta_denicolay.py`, 20 modelos entrenados con 202103–202106 que predicen 202108, y el archivo con los
      11.500 clientes de mayor promedio;
+   - D con N = 11.000: los de D y `07_archivo_d10.py`, que toma los 11.000 primeros del mismo promedio;
    - base: `05_envios_ensamble.py entrenar d03k2` y `05_envios_ensamble.py archivo d03k2 d04k2e 11500`.
 
 Cada etapa se compara con `huellas_esperadas.json`, tomadas de la corrida que generó el envío. Detienen la
@@ -38,7 +41,7 @@ CRUDO = Path(os.environ.get("COMPETENCIA_01_CRUDO", AQUI / "datos" / "competenci
 ESPERADAS = json.loads((AQUI / "huellas_esperadas.json").read_text(encoding="utf-8"))
 ENVIOS = AQUI / "envios"
 PYTHON_ORIGINAL = "3.13.3"
-POR_DEFECTO = "d06d"
+POR_DEFECTO = "d10d"
 
 
 def huella(path):

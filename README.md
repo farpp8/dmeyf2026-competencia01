@@ -2,18 +2,21 @@
 
 **Federico Ramírez** · Data Mining en Economía y Finanzas, Maestría en Data Mining (UBA), 2026 · comisión del lunes.
 
-Este repositorio reproduce, desde el dataset crudo de la cátedra, el archivo que envié al bot de la competencia:
-**`d06dn11500.csv`**, con 11.500 clientes de 202108 y SHA-256
-`de534992228e5f26ebda4dc867f86dc78282cc194030e1884ecdd2ffd1a3d294`.
+Este repositorio reproduce, desde el dataset crudo de la cátedra, el último archivo que envié al bot de la
+competencia: **`d10dn11000.csv`**, con 11.000 clientes de 202108 y SHA-256
+`8a03bf3d5fd792569187e8093a1663f7c7f97eeab7b785af412b06fc595a70b5`.
 
 **El modelo, D:** el promedio de las probabilidades de 20 LightGBM, uno por semilla.
 - **Entrenamiento:** 202103–202106, para separar BAJA+1 y BAJA+2 de CONTINUA.
 - **Variables:** los datos reparados más *lag* 1, delta 1, *lag* 2 y delta 2 de todas las variables, 735 columnas
   útiles.
 - **Receta de hiperparámetros:** la de Denicolay, ajustada en mi búsqueda de D04 (prueba 38).
-- **Envío:** los 11.500 clientes con mayor promedio.
+- **Envío:** los 11.000 clientes con mayor promedio. Es el mismo modelo que mandé el 7-oct con 11.500 clientes
+  (`d06dn11500.csv`); el 9-oct una regla fijada antes de mirar bajó el corte a 11.000 (D10, en
+  [DECISIONES.md](DECISIONES.md)). El archivo de 11.000 es exactamente las primeras 11.000 líneas del de 11.500.
 
-También reproduce la entrega anterior, **`d04k2en11500.csv`** (la «base»), con `python reproducir.py base`.
+También reproduce los envíos anteriores: **`d06dn11500.csv`** (D con 11.500), con `python reproducir.py d06d`, y
+**`d04k2en11500.csv`** (la «base»), con `python reproducir.py base`.
 
 ## Cómo reproducirlo
 
@@ -31,8 +34,8 @@ python reproducir.py
 ```
 
 **Comprobado en Windows 11,** en una carpeta limpia y con las versiones de `requirements.txt`: termina con
-`OK: d06dn11500.csv coincide byte por byte con el archivo enviado`. Tardó 37 minutos, casi todos en
-entrenar los 20 modelos, de unos 108 segundos cada uno. La base (`python reproducir.py base`) tarda unos 4 minutos.
+`OK: d10dn11000.csv coincide byte por byte con el archivo enviado`. Tardó 43 minutos, casi todos en entrenar los 20
+modelos. `python reproducir.py d06d` tarda lo mismo, y la base (`python reproducir.py base`), unos 4 minutos.
 
 En otro sistema operativo o con otra compilación de LightGBM, `deterministic=True` no garantiza las mismas
 probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en clientes cercanos al corte.
@@ -45,6 +48,7 @@ probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en 
 | `02_variables.py` | Módulo de variables. Para D se usa `construir(df, hist_1y2_todas=True)`: *lags* y deltas 1 y 2 de todos los predictores. La base usa `BASE`, la historia selectiva de C7. |
 | `03_envios_tablero.py` | Módulo con los meses, las 20 semillas y la escritura del CSV. Como script arma los envíos de prueba de D02; `reproducir.py` no lo corre así. |
 | `06_receta_denicolay.py` | **D:** los 20 modelos con la receta de la prueba 38, sus probabilidades para 202108 y el CSV con los 11.500 clientes de mayor promedio. |
+| `07_archivo_d10.py` | **El último envío:** los 11.000 clientes de mayor promedio de esas mismas 20 probabilidades, sin reentrenar. Controla que los 11.500 primeros sean los de `d06dn11500.csv`. |
 | `05_envios_ensamble.py` | **La base:** `entrenar d03k2` y `archivo d03k2 d04k2e 11500`. |
 | `test_01_preparar_datos.py`, `test_02_variables.py` | Pruebas con paneles chicos: clase, reparaciones, identificadores, rutas con apóstrofo e historia por mes exacto. |
 | `reproducir.py` | Corre las pruebas y los pasos en orden, y compara cada etapa con `huellas_esperadas.json`. |
@@ -75,6 +79,7 @@ o las probabilidades, por ejemplo con otro procesador, avisa y sigue: lo que se 
 | Archivo | SHA-256 |
 |---|---|
 | `competencia_01_crudo.csv`, la entrada (492.769.580 bytes) | `c72c8f5c1149f1d972e996c2963c5e3dbb31eb38cfe41c2bb1bbaf847d7a7ca1` |
+| `d10dn11000.csv`, D con N = 11.000, el último envío | `8a03bf3d5fd792569187e8093a1663f7c7f97eeab7b785af412b06fc595a70b5` |
 | `d06dn11500.csv`, D | `de534992228e5f26ebda4dc867f86dc78282cc194030e1884ecdd2ffd1a3d294` |
 | `d04k2en11500.csv`, la base | `91c18043de05f63a85108a0463599171b7e8ede3d1fa73f0e65aa3a0208684ba` |
 
@@ -98,6 +103,8 @@ Son copias de los que usé, con estos cambios, que no alteran el resultado:
    entrenamiento que usa: el de la configuración vigente y el de la prueba 38.
 6. `02_variables.py` no incluye dos opciones que agregué después en mi copia, `cero_fijo` y `mantenimiento_signo`.
    Las probé en D06, no las adopté y ni D ni la base las usan.
+7. `07_archivo_d10.py` es el camino de D de mi armador del archivo de D10, en un solo archivo: toma las 20
+   probabilidades de D y escribe los 11.000 primeros.
 
 Los docstrings mencionan archivos de mi carpeta de trabajo que no se publican: `decisiones/`, `experimentos/`,
 `envios/` y el script que manda los archivos al bot. El resumen de las decisiones está en

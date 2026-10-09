@@ -1,6 +1,6 @@
 # Decisiones de la Competencia 1
 
-Resumen de las seis decisiones que llevaron al archivo entregado, del 5 al 7-oct-2026. El detalle completo, con
+Resumen de las diez decisiones que llevaron al archivo entregado, del 5 al 9-oct-2026. El detalle completo, con
 los análisis, las pruebas y las verificaciones, está en mi carpeta de trabajo y no se publica.
 
 ## Procedimiento
@@ -129,8 +129,55 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   | L: *lags* y deltas 1 y 2 de todo, configuración vigente | 98,59 | +11,9 |
   | **D: las variables de L con la receta de la prueba 38** | **103,18** | **+16,4** |
 
-- **La regla elige D**, lo que verificó Codex por su cuenta. D es el último envío.
-- **D07:** un proceso iterativo multiagente alrededor de D, en curso.
+- **La regla elige D**, lo que verificó Codex por su cuenta.
+
+## D07 a D09 · Rondas alrededor de D (7 y 8-oct)
+
+Tres decisiones más intentaron mejorar a D, con reglas fijadas antes y el público sólo como control. Ninguna lo
+reemplazó:
+
+| Decisión | Qué se probó | Resultado |
+|---|---|---|
+| D07 | Un corte F4 (202105 → 202106), el único que ve la historia de orden 2; D con K1 y otras tres rondas | D-K1 perdió 10,6 en el público (92,57). Las rondas 2 y 3 no dejaron candidata y la 4 se omitió |
+| D08 | 24 configuraciones de hiperparámetros, medidas en F4 y F2 | La mejor pasó la pantalla (+4,56) pero no la confirmación con 20 semillas nuevas (+3,52, con una barra de 5,4). En el público, informativo, dio 99,19 |
+| D09 | Julio con etiquetas parciales, pesos para BAJA+1, reparar los cierres de tarjeta y un modelo auxiliar | La reparación se descartó antes de la pantalla, porque los cierres pesaban el 0,23% de la ganancia de los árboles. Las demás líneas no pasaron la pantalla: julio parcial ganaba en mayo y perdía 21 en junio |
+
+## D10 · Investigación profunda y el corte (8 y 9-oct)
+
+- **Análisis:** se revisaron las clases grabadas y los mensajes de los docentes, con un análisis de Claude (un flujo
+  de agentes con verificación adversarial) y otro de Codex, cruzados como en las decisiones anteriores.
+- **Hallazgo:** una cohorte de clientes con el préstamo personal congelado (el mismo monto positivo tres meses
+  seguidos) tiene 1,23% de BAJA+2 en mayo y 12,32% en junio. Explica entre el 21 y el 23% de la ganancia de D en
+  junio. Se mantuvo la métrica de D09, que pondera mayo y junio por igual, y se agregó un control que saca a esa
+  cohorte.
+- **Pantalla:** cinco cambios sobre D, cada uno por separado:
+  - un bloque de 21 variables de comportamiento por canal;
+  - *bagging* 0,8;
+  - `extra_trees`;
+  - pesos por recencia;
+  - BAJA+3 como positivo con peso 0,3.
+
+  **Ninguno llegó siquiera a empatar a D:**
+
+  | Cambio | Contra D (media de mayo y junio, M) |
+  |---|---:|
+  | Bloque de comportamiento | −3,70 |
+  | *Bagging* 0,8 | −0,24 |
+  | `extra_trees` | −24,30 |
+  | Pesos por recencia | −0,58 |
+  | BAJA+3 con peso 0,3 | −0,51 |
+
+- **El corte.** Esta regla se fijó antes de mirar los resultados:
+  - siete escenarios, con las 20 semillas de D en cuatro cortes de validación, junio sin la cohorte y junio con el
+    92% y el 85% de los aciertos;
+  - N\* es el de menor arrepentimiento máximo sobre la grilla 9.000–12.000;
+  - se cambia sólo si la media mejora.
+
+  **Dio N\* = 11.000:** el arrepentimiento máximo baja de 14,30 a 6,05 y la media sube 2,99 M. Sólo el corte F4
+  pierde al pasar de 11.500 a 11.000.
+- **El público como veto:** se adoptaba salvo que perdiera más de 2σ contra D (4,39). `d10dn11000.csv` dio
+  **102,60**, contra 103,18 de D: −0,58, dentro del ruido.
+- **Decisión: D con N = 11.000,** `d10dn11000.csv`. Es el último envío y lo reproduce este repositorio.
 
 ## Uso de IA
 
