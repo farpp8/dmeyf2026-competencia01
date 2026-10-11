@@ -17,3 +17,14 @@
 !/test_02_variables.py
 !/datos/
 !/datos/LEEME.md
+!/origen/
+!/origen/README.md
+!/origen/requirements.txt
+!/origen/comun.py
+!/origen/d04_busqueda.py
+!/origen/d04_seleccion.py
+!/origen/regla_n.py
+!/origen/esperado/
+!/origen/esperado/pruebas_d04.csv
+!/origen/esperado/seleccion_d04.csv
+!/origen/esperado/regla_n_d10.json

@@ -1,6 +1,6 @@
 # Decisiones de la Competencia 1
 
-Resumen de las diez decisiones que llevaron al archivo entregado, del 5 al 9-oct-2026. El detalle completo, con
+Resumen de las once decisiones que llevaron al archivo entregado, del 5 al 9-oct-2026. El detalle completo, con
 los análisis, las pruebas y las verificaciones, está en mi carpeta de trabajo y no se publica.
 
 ## Procedimiento
@@ -178,6 +178,20 @@ reemplazó:
 - **El público como veto:** se adoptaba salvo que perdiera más de 2σ contra D (4,39). `d10dn11000.csv` dio
   **102,60**, contra 103,18 de D: −0,58, dentro del ruido.
 - **Decisión: D con N = 11.000,** `d10dn11000.csv`. Es el último envío y lo reproduce este repositorio.
+
+## D11 · `max_bin` 255 (9-oct, informativa)
+
+- **Qué:** D con 255 cortes por variable en lugar de 31, con la misma pantalla de la D10, sellada antes de correr.
+- **Resultado:** ΔT +2,17, debajo de la barra de +3:
+  - mayo +3,03 y junio +1,30;
+  - los diagnósticos, −1,14 y +1,95;
+  - sin la cohorte de préstamos, junio queda en −0,27.
+- **No pasó, así que no cambió nada.** No se bajó la barra después de ver el resultado.
+
+## De dónde salen los hiperparámetros y el corte
+
+Las 83 hojas y el hessiano de D salen de la búsqueda y la selección de la D04; N = 11.000, de la regla de la D10. El
+código que los produjo, con las instrucciones para correrlo, está en [origen/](origen/README.md).
 
 ## Uso de IA
 

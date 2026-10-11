@@ -4,7 +4,8 @@
 
 Este repositorio reproduce, desde el dataset crudo de la cátedra, el último archivo que envié al bot de la
 competencia: **`d10dn11000.csv`**, con 11.000 clientes de 202108 y SHA-256
-`8a03bf3d5fd792569187e8093a1663f7c7f97eeab7b785af412b06fc595a70b5`.
+`8a03bf3d5fd792569187e8093a1663f7c7f97eeab7b785af412b06fc595a70b5`. Lo mandé el 9-oct-2026 a las 18:27, hora de
+Buenos Aires.
 
 **El modelo, D:** el promedio de las probabilidades de 20 LightGBM, uno por semilla.
 - **Entrenamiento:** 202103–202106, para separar BAJA+1 y BAJA+2 de CONTINUA.
@@ -21,7 +22,8 @@ También reproduce los envíos anteriores: **`d06dn11500.csv`** (D con 11.500), 
 ## Cómo reproducirlo
 
 Hace falta Python 3.13 de 64 bits y el crudo de la cátedra, `competencia_01_crudo.csv`, que no está en el
-repositorio. En macOS, LightGBM necesita además OpenMP (`brew install libomp`).
+repositorio: se baja de <https://storage.googleapis.com/open-courses/dmeyf2026-9c6f/competencia_01_crudo.csv> (ver
+`datos/LEEME.md`). En macOS, LightGBM necesita además OpenMP (`brew install libomp`).
 
 ```bash
 git clone https://github.com/farpp8/dmeyf2026-competencia01.git
@@ -35,7 +37,8 @@ python reproducir.py
 
 **Comprobado en Windows 11,** en una carpeta limpia y con las versiones de `requirements.txt`: termina con
 `OK: d10dn11000.csv coincide byte por byte con el archivo enviado`. Tardó 43 minutos, casi todos en entrenar los 20
-modelos. `python reproducir.py d06d` tarda lo mismo, y la base (`python reproducir.py base`), unos 4 minutos.
+modelos. `python reproducir.py d06d` tarda lo mismo, y la base (`python reproducir.py base`), unos 4 minutos. La
+memoria máxima de un proceso que arma las variables y entrena D es de unos 12 GB.
 
 En otro sistema operativo o con otra compilación de LightGBM, `deterministic=True` no garantiza las mismas
 probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en clientes cercanos al corte.
@@ -52,6 +55,7 @@ probabilidades. Si cambian, `reproducir.py` lo avisa, y el CSV puede diferir en 
 | `05_envios_ensamble.py` | **La base:** `entrenar d03k2` y `archivo d03k2 d04k2e 11500`. |
 | `test_01_preparar_datos.py`, `test_02_variables.py` | Pruebas con paneles chicos: clase, reparaciones, identificadores, rutas con apóstrofo e historia por mes exacto. |
 | `reproducir.py` | Corre las pruebas y los pasos en orden, y compara cada etapa con `huellas_esperadas.json`. |
+| `origen/` | **De dónde salen los hiperparámetros y el corte:** la búsqueda bayesiana y la selección de la D04, que dieron las 83 hojas y el hessiano, y la regla de N de la D10, que dio 11.000. Ver [origen/README.md](origen/README.md). No hace falta para reproducir el archivo. |
 
 ## Qué fija el resultado de D
 
