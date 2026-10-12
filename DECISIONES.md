@@ -40,7 +40,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
 - en F1 y en F2, la diferencia media por semilla es positiva, con al menos 4 de 5 semillas a favor en la
   pantalla y 16 de 20 en la confirmación.
 
-## D01 · Datos (5-oct)
+## D01 · Datos
 
 - **Clase:** `clase_ternaria` recalculada con la lógica de la cátedra. Si el cliente falta el mes siguiente es
   BAJA+1, aunque después vuelva; si está el siguiente y falta el subsiguiente, BAJA+2.
@@ -54,7 +54,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   - se sacan `cprestamos_personales` y `mprestamos_personales`: en junio cambia su relación con la baja.
 - **Meses:** el modelo final se entrena con 202103–202106 y predice 202108; 202107 se usa sólo como historia.
 
-## D02 · Variables (5 y 6-oct)
+## D02 · Variables
 
 - **Validación local:** ningún bloque cumplió la regla fijada antes: cierres centrados, indicadores de
   mantenimiento, rankings, historia selectiva, historia amplia y variables nuevas. El resultado local fue C0, los
@@ -71,7 +71,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   Me aparté del resultado local por la evidencia de agosto en el tablero, sabiendo que el tablero mide alrededor
   del 25% de agosto.
 
-## D03 · Clase de entrenamiento (6-oct)
+## D03 · Clase de entrenamiento
 
 - **Variantes:** K1, BAJA+2 contra el resto; K2, BAJA+1 y BAJA+2 contra CONTINUA; K3, BAJA+2 contra CONTINUA sin
   las filas BAJA+1.
@@ -81,7 +81,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   −6,08, no llegó al veto fijado antes de mandar, −9,94.
 - **Decisión: K2,** con K1 como alternativa.
 
-## D04 · Hiperparámetros (6 y 7-oct)
+## D04 · Hiperparámetros
 
 - **Búsqueda:** 40 pruebas con Optuna (TPE, semilla 147347) sobre la receta de Denicolay que se compartió en el
   Zulip de la materia: `learning_rate` 0,005, `max_bin` 31, `min_data_in_leaf` 0, `feature_fraction` 0,5 y
@@ -96,7 +96,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   500, con la pérdida medida contra el máximo de cada corte.
 - **Decisión:** se conservan los hiperparámetros vigentes, K2 y N = 11.500.
 
-## D05 · Archivo final (7-oct)
+## D05 · Archivo final
 
 - **Decisión: K2 sola,** con 20 semillas y N = 11.500: `d04k2en11500.csv`, el último envío hasta ese momento.
 - **Alternativas medidas y no adoptadas,** porque ninguna cumplió la regla de reemplazo:
@@ -108,7 +108,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
   | K2 + la receta de D04 (prueba 38, la mejor finalista de la selección) | entre +5,8 y +6,3 M en la media de F1 y F2, por debajo de los 10 M; sin F3 |
   | K1 sola | A −28,54 M; mejor en el tablero: 92,81 y 91,82 contra 86,74 |
 
-## D06 · Plan para los últimos días (7-oct)
+## D06 · Plan para los últimos días
 
 - **Un punto ciego de la validación local:**
   - F1 no usa ninguna variable de historia, porque marzo no tiene mes anterior;
@@ -131,7 +131,7 @@ La métrica principal es A = (A_F1 + A_F2) / 2, sobre el promedio de las probabi
 
 - **La regla elige D**, lo que verificó Codex por su cuenta.
 
-## D07 a D09 · Rondas alrededor de D (7 y 8-oct)
+## D07 a D09 · Rondas alrededor de D
 
 Tres decisiones más intentaron mejorar a D, con reglas fijadas antes y el público sólo como control. Ninguna lo
 reemplazó:
@@ -142,10 +142,9 @@ reemplazó:
 | D08 | 24 configuraciones de hiperparámetros, medidas en F4 y F2 | La mejor pasó la pantalla (+4,56) pero no la confirmación con 20 semillas nuevas (+3,52, con una barra de 5,4). En el público, informativo, dio 99,19 |
 | D09 | Julio con etiquetas parciales, pesos para BAJA+1, reparar los cierres de tarjeta y un modelo auxiliar | La reparación se descartó antes de la pantalla, porque los cierres pesaban el 0,23% de la ganancia de los árboles. Las demás líneas no pasaron la pantalla: julio parcial ganaba en mayo y perdía 21 en junio |
 
-## D10 · Investigación profunda y el corte (8 y 9-oct)
+## D10 · Investigación profunda y el corte
 
-- **Análisis:** se revisaron las clases grabadas y los mensajes de los docentes, con un análisis de Claude (un flujo
-  de agentes con verificación adversarial) y otro de Codex, cruzados como en las decisiones anteriores.
+- **Análisis:** Con un análisis de Claude (un flujo de agentes con verificación adversarial) y otro de Codex, cruzados     como en las decisiones anteriores.
 - **Hallazgo:** una cohorte de clientes con el préstamo personal congelado (el mismo monto positivo tres meses
   seguidos) tiene 1,23% de BAJA+2 en mayo y 12,32% en junio. Explica entre el 21 y el 23% de la ganancia de D en
   junio. Se mantuvo la métrica de D09, que pondera mayo y junio por igual, y se agregó un control que saca a esa
